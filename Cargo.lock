@@ -1260,7 +1260,7 @@ dependencies = [
 
 [[package]]
 name = "yorq"
-version = "0.4.4"
+version = "0.5.2"
 dependencies = [
  "bollard",
  "tokio",

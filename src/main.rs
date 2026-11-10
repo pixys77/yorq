@@ -6,7 +6,7 @@ mod list;
 
 
 async fn main(){
-    let help = r#"yorq - lightweight Docker container CLI manager
+    let HELP = r#"yorq - lightweight Docker container CLI manager
 
 USAGE:
     yorq <COMMAND> [OPTIONS]
