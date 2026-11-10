@@ -26,4 +26,17 @@ async fn main(){
     .inspect_container("test-box", None)
     .await;
 
+    match inspect_result {
+        Ok(info)    =>{ println!("Container found");
+
+        if let Some(state) = info.state {
+            let is_running = state.running.unwrap_or_default();
+            let pid = state.pid.unwrap_or_default();
+
+            println!("Running status:{:?}", is_running);
+            println!("Procces PID:{:?}", pid);
+        }
+    }
+        Err(e)      => println!("Error:{:?}", e),
+    }
 }
