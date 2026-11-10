@@ -13,7 +13,7 @@ pub async fn clean(){
     
     
     let one_hour = 3600;
-    let one_day = 10;
+    let one_day = 86400;
     
     let present_time = SystemTime::now().duration_since(UNIX_EPOCH).unwrap_or_default().as_secs() as i64;
 
