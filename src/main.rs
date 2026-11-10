@@ -1,6 +1,7 @@
 mod inspect;
 mod state;
 mod sweep;
+mod list;
 #[tokio::main]
 
 
@@ -33,6 +34,8 @@ COMMANDS:
 
         "help"                          => println!("{HELP}"),
         "sweep"                         => sweep::clean().await,
+        
+        "ls"                            => list::ls().await,
         _                               => println!("Undefined command\n{HELP}"),
 
     }
