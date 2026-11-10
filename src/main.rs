@@ -6,12 +6,13 @@ mod list;
 
 
 async fn main(){
-    let HELP = r#"yorq - lightweight Docker container CLI manager
+    let help = r#"yorq - lightweight Docker container CLI manager
 
 USAGE:
     yorq <COMMAND> [OPTIONS]
 
 COMMANDS:
+    ls                 List all containers with status and timestamps
     inspect <id/name>  Show container state and configuration
     start   <id/name>  Start specified container
     stop    <id/name>  Stop specified container
