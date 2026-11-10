@@ -1,5 +1,5 @@
 mod inspect;
-
+mod state;
 #[tokio::main]
 
 
@@ -13,6 +13,12 @@ async fn main(){
         "inspect" if args.len() <  3    => println!("[X] Error! not enough args."),
         "inspect"                       => inspect::container_inspect(&args[2]).await,
         
+        "start" if args.len() < 3       => println!("[X] Error! Not enough args."),
+        "start"                         => state::start_cont(&args[2]).await, 
+        
+        "stop" if args.len() < 3        => println!("[X] Error! Not enough args."),
+        "stop"                         => state::stop_cont(&args[2]).await,
+
         _                               => println!("Undefined command")
     }
 
