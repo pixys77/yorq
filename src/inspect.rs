@@ -8,7 +8,7 @@ let false_running: &str  = "Not running";
 
 
     let docker = Docker::connect_with_socket_defaults()
-        .expect("Не удалось подключиться к Docker сокету");
+        .expect("Failed to connect to the Docker socket");
 
     let inspect_result = docker.inspect_container(name, None).await;
 

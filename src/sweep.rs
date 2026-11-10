@@ -6,10 +6,10 @@ use bollard::Docker;
 
 pub async fn clean(){
     let docker = Docker::connect_with_socket_defaults()
-    .expect("Не удалось подключиться к Docker сокету");
+    .expect("Failed to connect to the Docker socket");
 
     let docker_list = docker.list_containers(Some(ListContainersOptions::<String>{all: true, ..Default::default()})).await;
-    let containers = docker_list.expect("Не удалось получить список");
+    let containers = docker_list.expect("Failed to retrieve the list");
     
     
     let one_hour = 3600;

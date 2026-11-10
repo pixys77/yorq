@@ -4,7 +4,7 @@ use bollard::container::{StartContainerOptions, StopContainerOptions};
 pub async fn start_cont(name:&str){
 
     let docker = Docker::connect_with_socket_defaults()
-    .expect("Не удалось подключиться к Docker сокету");
+    .expect("Failed to connect to the Docker socket");
 
     let start = docker.start_container(name, None::<StartContainerOptions<String>>).await;
 
@@ -16,7 +16,7 @@ pub async fn start_cont(name:&str){
 
 pub async fn stop_cont(name:&str){
     let docker = Docker::connect_with_socket_defaults()
-    .expect("Не удалось подключиться к Docker сокету");
+    .expect("Failed to connect to the Docker socket");
     
     let stop = docker.stop_container(name, None::<StopContainerOptions>).await;
 
