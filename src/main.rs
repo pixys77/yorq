@@ -10,7 +10,7 @@ async fn main(){
         return;
     }
     match args[1].as_str(){
-        "inspect" if args.len() <  3    => println!("[X] Error!"),
+        "inspect" if args.len() <  3    => println!("[X] Error! not enough args."),
         "inspect"                       => inspect::container_inspect(&args[2]).await,
         
         _                               => println!("Undefined command")
