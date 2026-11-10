@@ -9,7 +9,7 @@ pub async fn start_cont(name:&str){
     let start = docker.start_container(name, None::<StartContainerOptions<String>>).await;
 
     match start {
-        Ok(started) => println!("[+] Container '{}', started", name),
+        Ok(_) => println!("[+] Container '{}', started", name),
         Err(error)  => println!("[X] Failed to start containter: {:?}", error),
     }
 }
@@ -21,7 +21,7 @@ pub async fn stop_cont(name:&str){
     let stop = docker.stop_container(name, None::<StopContainerOptions>).await;
 
     match stop {
-        Ok(started) => println!("[+] Container '{}', stopped", name),
+        Ok(_) => println!("[+] Container '{}', stopped", name),
         Err(error)  => println!("[X] Failed to stop containter: {:?}", error),
     }
 

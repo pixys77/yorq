@@ -1,5 +1,6 @@
 mod inspect;
 mod state;
+mod sweep;
 #[tokio::main]
 
 
@@ -17,9 +18,11 @@ async fn main(){
         "start"                         => state::start_cont(&args[2]).await, 
         
         "stop" if args.len() < 3        => println!("[X] Error! Not enough args."),
-        "stop"                         => state::stop_cont(&args[2]).await,
+        "stop"                          => state::stop_cont(&args[2]).await,
 
+        "sweep"                         => sweep::clean().await,
         _                               => println!("Undefined command")
+
     }
 
 
