@@ -3,12 +3,10 @@ use bollard::Docker;
 
 pub async fn container_inspect(name:&str){
 
-let true_running: &str   = "Running";
-let false_running: &str  = "Not running";
 
 
     let docker = Docker::connect_with_socket_defaults()
-        .expect("Failed to connect to the Docker socket");
+        .expect("[!] Error! Failed to connect to the Docker socket");
 
     let inspect_result = docker.inspect_container(name, None).await;
 
@@ -25,53 +23,46 @@ let false_running: &str  = "Not running";
             
             //OOM kill check
             if oom_kill {
-                println!("Container OOM Killed!");
+                println!("[!] Container OOM Killed!");
             }
 
             // container name check
             if container_name.len() > 0 {
-                println!("Container name: {}",container_name.trim_start_matches("/"));
+                println!("[+] Container name: {}",container_name.trim_start_matches("/"));
             }else{
-                println!("Error!");
+                println!("[!] Error!");
             }
             // running state check
             if is_running {
-                println!("Running status is: {}", true_running);    
+                println!("[+] Running status is: {}", "Running");    
             }else  {
-                println!("Running status is: {}", false_running);
+                println!("[+] Docker container is not running");
             }
             
             //container time stamp
             if container_start.len() > 0 {
                 println!("Container start at: {}", container_start);
             }else{
-                println!("Error!");
+                println!("[!] Error!");
             }
 
 
             // container hash
             if container_hash.len() > 0 {
-                println!("Container hash: {}", container_hash);
+                println!("[+] Container hash: {}", container_hash);
             }
 
             
 
             // PID Check!
             if pid > 0{
-                println!("Procces PID: {}", pid)
+                println!("[+] Procces PID: {}", pid)
             }else if pid == 0{
-                println!("Procces PID is 0. Container is stopped/exited, or never started.")
+                println!("[+] Procces PID is 0. Container is stopped/exited, or never started.")
             }
-            
-      
-    
-
-            //OOM kill check
-            if oom_kill {
-                println!("Container OOM Killed!");
-            }
+        
         }
     }
-        Err(e)      => println!("Error:{}", e),
+        Err(e)      => println!("[!] Error: {}", e),
 }
 }

@@ -17,15 +17,14 @@ pub async fn ls(){
         let timestamp = data.created.unwrap_or_default();
         list.push((id, name, state, timestamp));
 
-        // id, name, state, txt data,     
     }
-    println!("{:<10} {:>20}, {:>20}, {:>20}", "Container ID", "Container name", "Container Status", "Timestamp");
+    println!("{:<10} {:>20} {:>20} {:>20}", "Container ID", "Container name", "Container Status", "Timestamp");
     println!("--------------------------------------------------------------------------------------------------");
     
     for (target_id, target_name, target_state, target_timestamp) in list{
     let id_hash: String = target_id.chars().take(6).collect();
     let container_name = target_name.trim_start_matches("/");
-    println!("{:>8} {:>24}, {:>17}, {:>27}", id_hash, container_name, target_state, target_timestamp);    
+    println!("{:>8} {:>24} {:>17} {:>27}", id_hash, container_name, target_state, target_timestamp);    
 
  
 
