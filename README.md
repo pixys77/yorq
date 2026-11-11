@@ -6,9 +6,10 @@ USAGE:
     yorq <COMMAND> [OPTIONS]
 
 COMMANDS:
-    ls                 List all containers with status and timestamps
-    inspect <id/name>  Show container state and configuration
-    start   <id/name>  Start specified container
-    stop    <id/name>  Stop specified container
-    sweep              Interactively clean containers
+ls                         List all containers with status and timestamps
+inspect <id/name>          Show container state
+start   <ids/names...>     Start specified container(s)
+stop    <ids/names...>     Stop specified container(s)
+restart <ids/names...>     Restart specified container(s)
+sweep                      Interactively clean containers
 ```

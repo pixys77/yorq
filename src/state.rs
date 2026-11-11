@@ -1,29 +1,48 @@
 use bollard::Docker;
 use bollard::container::{StartContainerOptions, StopContainerOptions};
+use std::io;
 
-pub async fn start_cont(name:&str){
 
+pub async fn start_cont(containers: &[String]){
     let docker = Docker::connect_with_socket_defaults()
     .expect("Failed to connect to the Docker socket");
 
-    let start = docker.start_container(name, None::<StartContainerOptions<String>>).await;
+    let mut confirm = String::new();
+    println!("Are you sure y/n");
+    io::stdin().read_line(&mut confirm).expect("[!] Error! Can`t read line");
+    let confirm_string: String = confirm.trim().trim_start_matches("/").to_string();
+    if confirm_string == "y" {
+            for name in containers{
 
-    match start {
-        Ok(_) => println!("[+] Container '{}', started", name),
-        Err(error)  => println!("[X] Failed to start containter: {:?}", error),
-    }
-}
+                    let start = docker.start_container(name, None::<StartContainerOptions<String>>).await;
 
-pub async fn stop_cont(name:&str){
-    let docker = Docker::connect_with_socket_defaults()
-    .expect("Failed to connect to the Docker socket");
+                match start {
+                    Ok(_) => println!("[+] Container '{}', started", name),
+                    Err(error)  => println!("[X] Failed to start containter: {:?}", error),
+                }
+            }
+        }
     
-    let stop = docker.stop_container(name, None::<StopContainerOptions>).await;
+    }   
 
-    match stop {
-        Ok(_) => println!("[+] Container '{}', stopped", name),
-        Err(error)  => println!("[X] Failed to stop containter: {:?}", error),
-    }
+pub async fn stop_cont(containers: &[String]){
+    let docker = Docker::connect_with_socket_defaults()
+    .expect("Failed to connect to the Docker socket");
 
-  
-}
+    let mut confirm = String::new();
+    println!("Are you sure y/n");
+    io::stdin().read_line(&mut confirm).expect("[!] Error! Can`t read line");
+    let confirm_string: String = confirm.trim().trim_start_matches("/").to_string();
+    if confirm_string == "y" {
+            for name in containers{
+
+                    let stop = docker.stop_container(name, None::<StopContainerOptions>).await;
+
+                match stop {
+                    Ok(_) => println!("[+] Container '{}', stopped", name),
+                    Err(error)  => println!("[X] Failed to stop containter: {:?}", error),
+                }
+            }
+        }
+    
+    }   
