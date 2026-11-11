@@ -10,5 +10,5 @@ COMMANDS:
     inspect <id/name>  Show container state and configuration
     start   <id/name>  Start specified container
     stop    <id/name>  Stop specified container
-    sweep              Interactively clean containers older than 24h"#;
+    sweep              Interactively clean containers
 ```
