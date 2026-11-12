@@ -3,6 +3,7 @@ mod state;
 mod list;
 mod sweep;
 mod restart;
+mod remove;
 
 #[tokio::main]
 
@@ -49,7 +50,10 @@ let ls_help = r#"
 [!] Error!
 USAGE:
     yorq ls"#;
-
+let remove_help = r#"[!] Error!
+USAGE:
+    yorq remove <id|name>...
+    yorq remove <id1> <id2> [name3]..."#;
     let args: Vec<String> = std::env::args().collect();
     if args.len()< 2{
         println!("[X] Error! Use arguments\n{help}");
@@ -58,9 +62,11 @@ USAGE:
     match args[1].as_str(){
         "help"                          => println!("{help}"),
 
+        "remove" if args.len() < 3      => println!("[X] Error! Not enough args.\n{remove_help}"),
+        "remove"                        => remove::remove(&args[2..]).await,
 
         "inspect" if args.len() > 3     => println!("[X] Error! To much args.\n{inspect_help}"),
-        "inspect" if args.len() < 3     => println!("[X] Error! not enough args.\n{inspect_help}"),
+        "inspect" if args.len() < 3     => println!("[X] Error! Not enough args.\n{inspect_help}"),
         "inspect"                       => inspect::container_inspect(&args[2]).await,
 
         "start" if args.len() < 3       => println!("[X] Error! Not enough args.\n{start_help}"),
@@ -72,13 +78,12 @@ USAGE:
         "sweep" if args.len() > 2       => println!("[X] Error. Too much args.\n{sweep_help}"),
         "sweep"                         => sweep::sweep().await,
         
+        "restart" if args.len() < 3     => println!("[!] Error! Not enough args.\n{restart_help}"),
         "restart"                       => restart::restart(&args[2..]).await,
 
+        "ls" if args.len() > 3          => println!("[!] Error! Too much args.\n{ls_help}"),
         "ls"                            => list::ls().await,
         _                               => println!("Undefined command\n{help}"),
 
     }
-
-
 }
-//

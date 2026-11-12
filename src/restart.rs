@@ -8,7 +8,7 @@ pub async fn restart(containers: &[String]){
     .expect("[!] Error! Failed to connect to the Docker socket");
 
     
-    println!("Are you sure? y/n");
+    println!("[?] Are you sure? y/n");
     let mut confirm = String::new();
     io::stdin().read_line(&mut confirm).expect("[!] Error! Can`t read line");
     let confirm_string: String = confirm.trim().trim_start_matches("/").to_string();
@@ -16,10 +16,10 @@ pub async fn restart(containers: &[String]){
         for name in containers{
             let options = RestartContainerOptions {t: 0};
 
-            docker.restart_container(name, Some(options)).await;
-        match docker.restart_container(name, Some(options)).await {
-            Ok(_) => println!("succesful"),
-            Err(error) => eprintln!("fail"),
+            let restart_container = docker.restart_container(name, Some(options)).await;
+        match restart_container {
+            Ok(_) => println!("[+] Container restarted succesful!"),
+            Err(error) => eprintln!("[X] Error! Container was not restarted: {error}"),
 
         }
         }
