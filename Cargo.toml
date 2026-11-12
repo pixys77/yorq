@@ -1,10 +1,11 @@
 [package]
 name = "yorq"
-version = "0.8.0"
+version = "0.9.0"
 edition = "2024"
 
 [dependencies]
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 
 bollard = "0.18"
+tar = "0.4.46"
 

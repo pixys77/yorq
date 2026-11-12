@@ -4,7 +4,7 @@ mod list;
 mod sweep;
 mod restart;
 mod remove;
-
+mod build;
 #[tokio::main]
 
 
@@ -81,6 +81,8 @@ USAGE:
         "restart" if args.len() < 3     => println!("[!] Error! Not enough args.\n{restart_help}"),
         "restart"                       => restart::restart(&args[2..]).await,
 
+        "create"                        => build::container_create().await,
+        
         "ls" if args.len() > 3          => println!("[!] Error! Too much args.\n{ls_help}"),
         "ls"                            => list::ls().await,
         _                               => println!("Undefined command\n{help}"),
