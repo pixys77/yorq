@@ -5,8 +5,16 @@ use std::io;
 
 pub async fn remove(containers: &[String]){
 
-    let docker = Docker::connect_with_socket_defaults()
-    .expect("[!] Error! Failed to connect to the Docker socket");    
+   let docker = match Docker::connect_with_socket_defaults(){
+            Ok(result)   =>{       
+            println!("[+] Succesful connect to docker");
+            result          
+            },
+            Err(e) =>{
+            println!("[!] Error!{e}");
+            return;
+            },
+        };
 
     println!("[?] Are you sure? y/n");
     let mut confirm = String::new();

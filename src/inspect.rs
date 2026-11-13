@@ -3,10 +3,16 @@ use bollard::Docker;
 
 pub async fn container_inspect(name:&str){
 
-
-
-    let docker = Docker::connect_with_socket_defaults()
-        .expect("[!] Error! Failed to connect to the Docker socket");
+    let docker = match Docker::connect_with_socket_defaults(){
+            Ok(result)   =>{       
+            println!("[+] Succesful connect to docker");
+            result          
+            },
+            Err(e) =>{
+            println!("[!] Error!{e}");
+            return;
+            },
+        };
 
     let inspect_result = docker.inspect_container(name, None).await;
 
@@ -20,7 +26,6 @@ pub async fn container_inspect(name:&str){
             let container_name = info.name.unwrap_or_default();
             let container_start = state.started_at.unwrap_or_default();
             let container_hash = info.id.unwrap_or_default();
-            
             //OOM kill check
             if oom_kill {
                 println!("[!] Container OOM Killed!");

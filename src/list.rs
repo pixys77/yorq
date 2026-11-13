@@ -2,11 +2,21 @@ use bollard::Docker;
 use bollard::container::ListContainersOptions;
 
 pub async fn ls(){
-    let docker = Docker::connect_with_socket_defaults()
-    .expect("Failed to connect to the Docker socket");
+
+    let docker = match Docker::connect_with_socket_defaults(){
+            Ok(result)   =>{       
+            println!("[+] Succesful connect to docker");
+            result          
+            },
+            Err(e) =>{
+            println!("[!] Error!{e}");
+            return;
+            },
+        };
+
     
     let docker_list = docker.list_containers(Some(ListContainersOptions::<String>{all: true, ..Default::default()})).await;
-    let containers = docker_list.expect("Failed to retrieve the list");
+    let containers = docker_list.expect("[!] Failed to retrieve the list");
     
     let mut list = Vec::new();
 

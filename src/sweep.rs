@@ -12,8 +12,18 @@ pub async fn sweep(){
     .unwrap_or_default()
     .as_secs() as i64;
     let mut container_data = Vec::new();
-    let docker = Docker::connect_with_socket_defaults()
-    .expect("Failed to connect to the Docker socket");
+    
+    let docker = match Docker::connect_with_socket_defaults(){
+            Ok(result)   =>{       
+            println!("[+] Succesful connect to docker");
+            result          
+            },
+            Err(e) =>{
+            println!("[!] Error!{e}");
+            return;
+            },
+        };
+
     let docker_list = docker
     .list_containers(Some(ListContainersOptions::<String>{all: true, ..Default::default()})).await;
     let container = docker_list
@@ -60,9 +70,24 @@ pub async fn sweep(){
                         io::stdin().read_line(&mut confirm).expect("Failed to read");
                         let clean_confirm = confirm.trim();
                         if clean_confirm == "y" {
-                            let _ = docker.remove_container(target_id, None::<RemoveContainerOptions>).await;
-                            container_data[index] = None;
-                            println!("[+] Succesful");
+                            // let _ = docker.remove_container(target_id, None::<RemoveContainerOptions>).await;
+                            // container_data[index] = None;
+                            // println!("[+] Succesful");
+                            
+                            match docker.remove_container(target_id, None::<RemoveContainerOptions>).await{
+                                    Ok(_)   =>{
+                                        container_data[index] = None;
+                                        println!("[+] Succesful");           
+                                    },
+                                    Err(e) =>{
+                                        println!("[!] Error!{e}");
+                                    }
+
+
+                            }
+
+
+
                         }else if clean_confirm == "n" {
                             break;
                         }

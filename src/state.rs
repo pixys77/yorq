@@ -4,8 +4,16 @@ use std::io;
 
 
 pub async fn start_cont(containers: &[String]){
-    let docker = Docker::connect_with_socket_defaults()
-    .expect("Failed to connect to the Docker socket");
+      let docker = match Docker::connect_with_socket_defaults(){
+            Ok(result)   =>{       
+            println!("[+] Succesful connect to docker");
+            result          
+            },
+            Err(e) =>{
+            println!("[!] Error!{e}");
+            return;
+            },
+        };
 
     let mut confirm = String::new();
     println!("Are you sure y/n");
@@ -18,7 +26,7 @@ pub async fn start_cont(containers: &[String]){
 
                 match start {
                     Ok(_) => println!("[+] Container '{}', started", name),
-                    Err(error)  => println!("[X] Failed to start containter: {:?}", error),
+                    Err(error)  => println!("[!] Failed to start containter: {:?}", error),
                 }
             }
         }
@@ -40,7 +48,7 @@ pub async fn stop_cont(containers: &[String]){
 
                 match stop {
                     Ok(_) => println!("[+] Container '{}', stopped", name),
-                    Err(error)  => println!("[X] Failed to stop containter: {:?}", error),
+                    Err(error)  => println!("[!] Failed to stop containter: {:?}", error),
                 }
             }
         }

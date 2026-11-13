@@ -4,9 +4,16 @@ use bollard::Docker;
 
 pub async fn restart(containers: &[String]){
 
-    let docker = Docker::connect_with_socket_defaults()
-    .expect("[!] Error! Failed to connect to the Docker socket");
-
+      let docker = match Docker::connect_with_socket_defaults(){
+            Ok(result)   =>{       
+            println!("[+] Succesful connect to docker");
+            result          
+            },
+            Err(e) =>{
+            println!("[!] Error!{e}");
+            return;
+            },
+        };
     
     println!("[?] Are you sure? y/n");
     let mut confirm = String::new();
@@ -19,7 +26,7 @@ pub async fn restart(containers: &[String]){
             let restart_container = docker.restart_container(name, Some(options)).await;
         match restart_container {
             Ok(_) => println!("[+] Container restarted succesful!"),
-            Err(error) => eprintln!("[X] Error! Container was not restarted: {error}"),
+            Err(error) => eprintln!("[!] Error! Container was not restarted: {error}"),
 
         }
         }
